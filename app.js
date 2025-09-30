@@ -32,50 +32,6 @@ const initializeDBAndServer = async () => {
 
 initializeDBAndServer()
 
-app.post('/users/', async (request, response) => {
-  const {name, password} = request.body
-  const hashedPassword = await bcrypt.hash(password, 10)
-  const selectUserQuery = `SELECT * FROM users WHERE name = '${name}'`
-  const dbUser = await db.get(selectUserQuery)
-  if (!dbUser || (Array.isArray(dbUser) && dbUser.length === 0)) {
-    const createUserQuery = `
-      INSERT INTO 
-        users (name, password) 
-      VALUES 
-        ( 
-          '${name}',
-          '${hashedPassword}'
-        )`
-    const dbResponse = await db.run(createUserQuery)
-    const newUserId = dbResponse.lastID
-    response.send(`Created new user with ${newUserId}`)
-  } else {
-    response.status = 400
-    response.send('User already exists')
-  }
-})
-
-// Login api
-
-app.post('/login', async (request, response) => {
-  const {name, password} = request.body
-  const getQuery = `select * from users where name = '${name}';`
-  const dbUser = await db.get(getQuery)
-  if (!dbUser || (Array.isArray(dbUser) && dbUser.length === 0)) {
-    response.status(400)
-    response.send('Invalid User')
-  } else {
-    const isPasswordMatched = await bcrypt.compare(password, dbUser.password)
-
-    if (isPasswordMatched === true) {
-      response.status(200)
-      response.send('login success')
-    } else {
-      response.status(400)
-      response.send('Invalid Password')
-    }
-  }
-})
 
 app.get('/colleges', async (request, response) => {
   const {order} = request.query
