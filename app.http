@@ -1,0 +1,41 @@
+
+POST http://localhost:3000/users/
+Content-Type : application/json
+
+{
+    "name" : "Sai Kumar",
+    "password" : "Sai@1234"
+}
+
+POST http://localhost:3000/login
+Content-Type : application/json
+
+{
+    "name" : "Bhanu",
+    "password" : "bhanu@2025"
+}
+
+GET http://localhost:3000/colleges/?order=DESC&search_q="Mumbai"
+
+
+GET http://localhost:3000/reviews
+
+POST http://localhost:3000/reviews
+Content-Type : application/json
+
+{
+    "college_id": 4,
+    "comment": "Amazing campus life and clubs",
+    "rating": 5
+}
+
+
+POST http://localhost:3000/favorites
+Content-Type : application/json
+
+{
+    "user_id" : 2,
+    "college_id" : 4
+}
+
+GET http://localhost:3000/favorites
