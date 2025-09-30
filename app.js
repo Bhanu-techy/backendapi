@@ -3,10 +3,10 @@ const path = require('path')
 
 const {open} = require('sqlite')
 const sqlite3 = require('sqlite3')
-const cors =require("cors")
-const app = express();
+const cors = require('cors')
+const app = express()
 
-app.use(cors());
+app.use(cors())
 
 const bcrypt = require('bcrypt')
 
@@ -80,9 +80,8 @@ app.post('/login', async (request, response) => {
 })
 
 app.get('/colleges', async (request, response) => {
-  const {order, search_q} = request.query
-  let orderSqs
-  const getQuery = `select * from colleges where location LIKE '%${search_q}%' order by fee ${order}`
+  const {order, search_q = ''} = request.query
+  const getQuery = `select * from colleges order by fee ${order}`
   const getResponse = await db.all(getQuery)
   response.send(getResponse)
 })
@@ -121,7 +120,18 @@ app.post('/favorites', async (request, response) => {
   const addFavorite = `insert into favorite_colleges(user_id, college_id)
   values('${user_id}', '${college_id}')`
   await db.run(addFavorite)
-  response.send('review added')
+  response.send('Marked as favorite')
+})
+
+app.delete('/favorites/:id', async (request, response) => {
+  const {id} = request.params
+  const {userId} = request.body
+
+  console.log(id)
+  const deleteQuery = `delete from favorite_colleges where user_id = ${userId} and college_id = ${id} `
+
+  await db.run(deleteQuery)
+  response.send('Removed from favorites')
 })
 
 module.exports = app

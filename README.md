@@ -1,48 +1,67 @@
 # Covid-19 India
 
-Given two files `app.js` and a database file `covid19India.db` consisting of two tables `state` and `district`.
+Given two files `app.js` and a database file `database.db` consisting of four tables `colleges`, `users`, `favorite_colleges` and `reviews`.
 
-Write APIs to perform CRUD operations on the tables `state`, `district` containing the following columns,
+Write APIs to perform CRUD operations on the tables `colleges`, `reviews` containing the following columns,
 
-**State Table**
+**user Table**
 
 | Columns    | Type    |
 | ---------- | ------- |
-| state_id   | INTEGER |
-| state_name | TEXT    |
-| population | INTEGER |
+| user_id    | INTEGER |
+| name       | TEXT    |
+| password   | TEXT    |
 
-**District Table**
+**colleges Table**
 
 | Columns       | Type    |
 | ------------- | ------- |
-| district_id   | INTEGER |
-| district_name | TEXT    |
-| state_id      | INTEGER |
-| cases         | INTEGER |
-| cured         | INTEGER |
-| active        | INTEGER |
-| deaths        | INTEGER |
+|  id           | INTEGER |
+|  name         | VARCHAR |
+|  location     | VARCHAR |
+|  corse        | VARCHAR |
+|  Fee          | INTEGER |
+
+**reviews Table**
+
+| Columns       | Type    |
+| ------------- | ------- |
+| id            | INTEGER |
+| college_id    | INTEGER |
+| comment       | TEXT    |
+| rating        | INTEGER |
+
+**favorite_colleges Table**
+
+| Columns       | Type    |
+| ------------- | ------- |
+| id            | INTEGER |
+| user_id       | INTEGER |
+| college_id    | INTEGER |
+
+
 
 ### API 1
 
-#### Path: `/states/`
+#### Path: `/colleges
 
 #### Method: `GET`
 
 #### Description:
 
-Returns a list of all states in the state table
+Returns a list of all colleges in the colleges table
 
 #### Response
 
 ```
 [
   {
-    stateId: 1,
-    stateName: "Andaman and Nicobar Islands",
-    population: 380581
-  },
+        "id": 1,
+        "name": "GRIET Engineering College",
+        "location": "Hyderabad",
+        "course": "Computer Science",
+        "fee": 100000
+    }, 
 
   ...
 ]
@@ -50,114 +69,97 @@ Returns a list of all states in the state table
 
 ### API 2
 
-#### Path: `/states/:stateId/`
+#### Path: `/reviews`
 
 #### Method: `GET`
 
 #### Description:
 
-Returns a state based on the state ID
+Returns a list of reviews from reviews
 
 #### Response
 
-```
-{
-  stateId: 8,
-  stateName: "Delhi",
-  population: 16787941
-}
+[
+    {
+        "id": 1,
+        "college_id": 1,
+        "comment": "Great college with excellent faculty",
+        "rating": 5
+    },
+    ....
+]
 ```
 
 ### API 3
 
-#### Path: `/districts/`
+#### Path: `/reviews`
 
 #### Method: `POST`
 
 #### Description:
 
-Create a district in the district table, `district_id` is auto-incremented
+Create a review in the reviews table, `id` is auto-incremented
 
 #### Request
 
 ```
 {
-  "districtName": "Bagalkot",
-  "stateId": 3,
-  "cases": 2323,
-  "cured": 2000,
-  "active": 315,
-  "deaths": 8
+    "college_id": 4,
+    "comment": "Amazing campus life and clubs",
+    "rating": 5
 }
 ```
 
 #### Response
 
 ```
-District Successfully Added
+{id : id}
 ```
 
 ### API 4
 
-#### Path: `/districts/:districtId/`
+#### Path: `/favorites`
 
 #### Method: `GET`
 
 #### Description:
 
-Returns a district based on the district ID
+Returns a user details and their favorite colleges of each user
 
 #### Response
 
 ```
-{
-  districtId: 322,
-  districtName: "Haveri",
-  stateId: 36,
-  cases: 2816,
-  cured: 2424,
-  active: 172,
-  deaths: 220,
-}
+[
+    {
+        "user_id": 1,
+        "user_name": "Bhanu",
+        "favorite_colleges": "Sunrise Business School, VJIT Engineering College"
+    },
+    ....
+]
 ```
-
-### API 5
-
-#### Path: `/districts/:districtId/`
-
-#### Method: `DELETE`
-
-#### Description:
-
-Deletes a district from the district table based on the district ID
-
-#### Response
 
 ```
 District Removed
 
 ```
 
-### API 6
+### API 5
 
-#### Path: `/districts/:districtId/`
+#### Path: `/favorites`
 
-#### Method: `PUT`
+#### Method: `POST`
 
 #### Description:
 
-Updates the details of a specific district based on the district ID
+Marks the college as favorite college for a specific user
 
 #### Request
 
 ```
 {
-  "districtName": "Nadia",
-  "stateId": 3,
-  "cases": 9628,
-  "cured": 6524,
-  "active": 3000,
-  "deaths": 104
+    "user_id" : 1,
+    "college_id" : 5
 }
 ```
 
@@ -165,51 +167,23 @@ Updates the details of a specific district based on the district ID
 
 ```
 
-District Details Updated
+Marked as favorite
 
 ```
+### API 
 
-### API 7
+#### Path: `/favorite/:id`
 
-#### Path: `/states/:stateId/stats/`
-
-#### Method: `GET`
+#### Method: `DELETE`
 
 #### Description:
 
-Returns the statistics of total cases, cured, active, deaths of a specific state based on state ID
+Removes the college as from the favorite list of a specific user based on user_id
 
 #### Response
-
-```
-{
-  totalCases: 724355,
-  totalCured: 615324,
-  totalActive: 99254,
-  totalDeaths: 9777
-}
-
 ```
 
-### API 8
-
-#### Path: `/districts/:districtId/details/`
-
-#### Method: `GET`
-
-#### Description:
-
-Returns an object containing the state name of a district based on the district ID
-
-#### Response
-
-```
-
-{
-  stateName: "Maharashtra"
-}
-
-```
+Removed from favorites
 
 <br/>
 

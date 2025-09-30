@@ -15,7 +15,7 @@ Content-Type : application/json
     "password" : "bhanu@2025"
 }
 
-GET http://localhost:3000/colleges/?order=DESC&search_q="Mumbai"
+GET http://localhost:3000/colleges/?order=ASC
 
 
 GET http://localhost:3000/reviews
@@ -34,8 +34,15 @@ POST http://localhost:3000/favorites
 Content-Type : application/json
 
 {
-    "user_id" : 2,
-    "college_id" : 4
+    "user_id" : 1,
+    "college_id" : 5
 }
 
 GET http://localhost:3000/favorites
+
+DELETE http://localhost:3000/favorites/4
+Content-Type : application/json
+
+{
+    "userId" : 2
+}
