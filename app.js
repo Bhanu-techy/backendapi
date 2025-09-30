@@ -80,7 +80,7 @@ app.post('/login', async (request, response) => {
 })
 
 app.get('/colleges', async (request, response) => {
-  const {order, search_q = ''} = request.query
+  const {order} = request.query
   const getQuery = `select * from colleges order by fee ${order}`
   const getResponse = await db.all(getQuery)
   response.send(getResponse)
