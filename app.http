@@ -3,8 +3,8 @@ POST http://localhost:3000/users/
 Content-Type : application/json
 
 {
-    "name" : "Sai Kumar",
-    "password" : "Sai@1234"
+    "name" : "Chandu",
+    "password" : "chandu@0000"
 }
 
 POST http://localhost:3000/login
@@ -12,8 +12,9 @@ Content-Type : application/json
 
 {
     "name" : "Bhanu",
-    "password" : "bhanu@2025"
+    "password" : "bhanu@025"
 }
+
 
 GET http://localhost:3000/colleges/?order=ASC
 
