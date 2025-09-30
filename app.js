@@ -6,7 +6,7 @@ const sqlite3 = require('sqlite3')
 const cors = require('cors')
 const app = express()
 
-app.use(cors());
+app.use(cors())
 app.use(express.json())
 
 const bcrypt = require('bcrypt')
@@ -32,10 +32,55 @@ const initializeDBAndServer = async () => {
 
 initializeDBAndServer()
 
+app.post('/users/', async (request, response) => {
+  const {name, password} = request.body
+  const hashedPassword = await bcrypt.hash(password, 10)
+  const selectUserQuery = `SELECT * FROM users WHERE name = '${name}'`
+  const dbUser = await db.get(selectUserQuery)
+  if (!dbUser || (Array.isArray(dbUser) && dbUser.length === 0)) {
+    const createUserQuery = `
+      INSERT INTO 
+        users (name, password) 
+      VALUES 
+        ( 
+          '${name}',
+          '${hashedPassword}'
+        )`
+    const dbResponse = await db.run(createUserQuery)
+    const newUserId = dbResponse.lastID
+    response.send(`Created new user with ${newUserId}`)
+  } else {
+    response.status = 400
+    response.send('User already exists')
+  }
+})
+
+// Login api
+
+app.post('/login', async (request, response) => {
+  const {name, password} = request.body
+  const getQuery = `select * from users where name = '${name}';`
+  const dbUser = await db.get(getQuery)
+  if (!dbUser || (Array.isArray(dbUser) && dbUser.length === 0)) {
+    response.status(400)
+    response.send('Invalid User')
+  } else {
+    const isPasswordMatched = await bcrypt.compare(password, dbUser.password)
+
+    if (isPasswordMatched === true) {
+      response.status(200)
+      response.send('login success')
+    } else {
+      response.status(400)
+      response.send('Invalid Password')
+    }
+  }
+})
+
 
 app.get('/colleges', async (request, response) => {
   const {order} = request.query
-  const sortOrder = order === "DESC" ? "DESC" : "ASC"
+  const sortOrder = order === 'DESC' ? 'DESC' : 'ASC'
   const getQuery = `select * from colleges order by fee ${sortOrder}`
   const getResponse = await db.all(getQuery)
   response.send(getResponse)
