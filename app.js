@@ -6,7 +6,8 @@ const sqlite3 = require('sqlite3')
 const cors = require('cors')
 const app = express()
 
-app.use(cors())
+app.use(cors());
+app.use(express.json());
 
 const bcrypt = require('bcrypt')
 
@@ -31,7 +32,7 @@ const initializeDBAndServer = async () => {
 
 initializeDBAndServer()
 
-app.use(express.json())
+
 
 app.post('/users/', async (request, response) => {
   const {name, password} = request.body
@@ -62,7 +63,6 @@ app.post('/login', async (request, response) => {
   const {name, password} = request.body
   const getQuery = `select * from users where name = '${name}';`
   const dbUser = await db.get(getQuery)
-
   if (dbUser === undefined) {
     response.status(400)
     response.send('Invalid User')
