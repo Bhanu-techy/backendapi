@@ -39,7 +39,7 @@ app.post('/users/', async (request, response) => {
   const hashedPassword = await bcrypt.hash(password, 10)
   const selectUserQuery = `SELECT * FROM users WHERE name = '${name}'`
   const dbUser = await db.get(selectUserQuery)
-  if (dbUser === undefined) {
+  if (!dbUser || (Array.isArray(dbUser) && dbUser.length === 0)) {
     const createUserQuery = `
       INSERT INTO 
         users (name, password) 
