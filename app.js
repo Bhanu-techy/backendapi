@@ -35,7 +35,8 @@ initializeDBAndServer()
 
 app.get('/colleges', async (request, response) => {
   const {order} = request.query
-  const getQuery = `select * from colleges order by fee ${order}`
+  const sortOrder = order === "DESC" ? "DESC" : "ASC"
+  const getQuery = `select * from colleges order by fee ${sortOrder}`
   const getResponse = await db.all(getQuery)
   response.send(getResponse)
 })
