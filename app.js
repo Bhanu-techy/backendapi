@@ -6,7 +6,7 @@ const sqlite3 = require('sqlite3')
 const cors = require('cors')
 const app = express()
 const jwt = require('jsonwebtoken')
-//app.use(cors())
+app.use(cors())
 app.use(express.json())
 
 const bcrypt = require('bcrypt')
@@ -69,7 +69,7 @@ app.post('/login', async (request, response) => {
 
     if (isPasswordMatched === true) {
       const payload = {id: dbUser.id, name: dbUser.name}
-      const jwtToken = jwt.sign(payload, "MY_SECRET_TOKEN")
+      const jwtToken = jwt.sign(payload, 'MY_SECRET_TOKEN')
       response.status(200)
       response.send({jwt_token: jwtToken})
     } else {
