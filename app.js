@@ -5,8 +5,8 @@ const {open} = require('sqlite')
 const sqlite3 = require('sqlite3')
 const cors = require('cors')
 const app = express()
-
-app.use(cors())
+const jwt = require('jsonwebtoken')
+//app.use(cors())
 app.use(express.json())
 
 const bcrypt = require('bcrypt')
@@ -68,15 +68,16 @@ app.post('/login', async (request, response) => {
     const isPasswordMatched = await bcrypt.compare(password, dbUser.password)
 
     if (isPasswordMatched === true) {
+      const payload = {id: dbUser.id, name: dbUser.name}
+      const jwtToken = jwt.sign(payload, "MY_SECRET_TOKEN")
       response.status(200)
-      response.send('login success')
+      response.send({jwt_token: jwtToken})
     } else {
       response.status(400)
-      response.send('Invalid Password')
+      response.send({error_msg: 'Invalid Password'})
     }
   }
 })
-
 
 app.get('/colleges', async (request, response) => {
   const {order} = request.query
