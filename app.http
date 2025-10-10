@@ -1,49 +1,18 @@
 
-POST http://localhost:3000/users/
-Content-Type : application/json
-
-{
-    "name" : "Chandu",
-    "password" : "chandu@0000"
-}
-
 POST http://localhost:3000/login
 Content-Type : application/json
 
 {
-    "name" : "Chandu",
-    "password" : "chandu@0000"
+    "email" : "bhanuprakashdevari@gmail.com",
+    "password" : "bhanu@2025"
 }
 
-
-GET http://localhost:3000/colleges/?order=ASC
-
-
-GET http://localhost:3000/reviews
-
-POST http://localhost:3000/reviews
+POST http://localhost:3000/users/
 Content-Type : application/json
 
 {
-    "college_id": 4,
-    "comment": "Amazing campus life and clubs",
-    "rating": 5
-}
-
-
-POST http://localhost:3000/favorites
-Content-Type : application/json
-
-{
-    "user_id" : 1,
-    "college_id" : 5
-}
-
-GET http://localhost:3000/favorites
-
-DELETE http://localhost:3000/favorites/4
-Content-Type : application/json
-
-{
-    "userId" : 2
+    "name" : "Bhanu Prakash Devari",
+    "password" : "bhanu@2025",
+    "address" : "1-23/A-122, Kukatpally, Hyderabad",
+    "email" : "bhanuprakashdevari@gmail.com"
 }
