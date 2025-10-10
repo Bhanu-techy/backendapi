@@ -4,7 +4,7 @@ Content-Type : application/json
 
 {
     "email" : "bhanuprakashdevari@gmail.com",
-    "password" : "bhanu@2025"
+    "password" : "bhanu@1234"
 }
 
 POST http://localhost:3000/users/
@@ -15,4 +15,23 @@ Content-Type : application/json
     "password" : "bhanu@2025",
     "address" : "1-23/A-122, Kukatpally, Hyderabad",
     "email" : "bhanuprakashdevari@gmail.com"
+}
+
+PUT http://localhost:3000/users
+Content-Type : application/json
+
+{
+    "email" : "bhanuprakashdevari@gmail.com",
+    "password" : "bhanu@1234"
+}
+
+
+GET http://localhost:3000/store/details
+
+POST http://localhost:3000/reviews
+Content-Type : application/json
+
+{
+    "store_id" : 4,
+    "rating" : 3
 }

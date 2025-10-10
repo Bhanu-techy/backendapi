@@ -81,12 +81,27 @@ app.post('/login', async (request, response) => {
   }
 })
 
-app.post('/users/details', async (request, response) => {
-  const {email} = request.body
-  const getQuery = `select * from users where email = '${email}'`
-  const getResponse = await db.get(getQuery)
+app.put('/users', async (request, response) => {
+  const {email, password} = request.body
+  const hashedPassword = await bcrypt.hash(password, 10)
+  const updateQuery = `update users set password = '${hashedPassword}' where email = '${email}'`
+  await db.run(updateQuery)
+  response.send('Password Updated')
+})
+
+app.get('/store/details', async (request, response) => {
+  const getQuery = `select stores.name as storeName, stores.address as address, avg(reviews.rating) as rating from stores inner join reviews
+   on stores.id=reviews.store_id group by stores.name order by storeName`
+  const getResponse = await db.all(getQuery)
   response.send(getResponse)
-  console.log(email)
+})
+
+app.post('/reviews', async (request, response) => {
+  const {store_id, rating} = request.body
+  const addreviewQuery = `insert into reviews(store_id, rating)
+  values('${store_id}', '${rating}')`
+  await db.run(addreviewQuery)
+  response.send('Review added Successfully')
 })
 
 module.exports = app
