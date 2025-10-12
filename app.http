@@ -46,7 +46,7 @@ GET http://localhost:3000/api/admin/dashboard
 Authorization : Breaer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJoYW51cHJha2FzaGRldmFyaUBnbWFpbC5jb20iLCJpYXQiOjE3NjAyNDUzMTZ9.mtywNaTHzgfDhEbb8s-NLdiT8Q8M5QN1qBE1AEssP_0
 
 
-GET http://localhost:3000/api/adim/users
+GET http://localhost:3000/api/admin/users
 Authorization : Breaer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJoYW51cHJha2FzaGRldmFyaUBnbWFpbC5jb20iLCJpYXQiOjE3NjAyNDUzMTZ9.mtywNaTHzgfDhEbb8s-NLdiT8Q8M5QN1qBE1AEssP_0
 
 GET http://localhost:3000/api/admin/stores
@@ -68,12 +68,21 @@ Content-Type : application/json
 GET http://localhost:3000/api/admin/users/4
 Authorization : Breaer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJoYW51cHJha2FzaGRldmFyaUBnbWFpbC5jb20iLCJpYXQiOjE3NjAyNDUzMTZ9.mtywNaTHzgfDhEbb8s-NLdiT8Q8M5QN1qBE1AEssP_0
 
-POST http://localhost:3000/reviews
+GET http://localhost:3000/api/user/stores
+Authorization : Breaer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJoYW51cHJha2FzaGRldmFyaUBnbWFpbC5jb20iLCJpYXQiOjE3NjAyNDUzMTZ9.mtywNaTHzgfDhEbb8s-NLdiT8Q8M5QN1qBE1AEssP_0
+
+
+POST http://localhost:3000/api/user/ratings
 Content-Type : application/json
 
 {
-    "store_id" : 4,
-    "rating" : 4
+    "store_id" : 3,
+    "rating" : 5
 }
 
-GET http://localhost:3000/sample/stores
+POST http://localhost:3000/api/owner/dashboard
+Content-Type : application/json
+
+{
+    "id" : 2
+}

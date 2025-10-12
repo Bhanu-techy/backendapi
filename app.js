@@ -91,6 +91,7 @@ app.post('/api/auth/login', async (request, response) => {
   const {email, password} = request.body
   const getQuery = `select * from users where email = '${email}'`
   const dbUser = await db.get(getQuery)
+  const {id} = dbUser
 
   if (!dbUser || (Array.isArray(dbUser) && dbUser.length === 0)) {
     response.status(400)
@@ -102,7 +103,7 @@ app.post('/api/auth/login', async (request, response) => {
       const payload = {id: dbUser.id, email: dbUser.email}
       const jwtToken = jwt.sign(payload, 'MY_SECRET_TOKEN')
       response.status(200)
-      response.send({jwt_token: jwtToken})
+      response.send({jwt_token: jwtToken, id})
     } else {
       response.status(400)
       response.send({error_msg: 'Invalid Password'})
@@ -145,8 +146,8 @@ app.put(
 )
 
 // GET Api to display all Users
-app.get('/api/adim/users', authenticateToken, async (request, response) => {
-  const getQuery = `select name, email, address, role from users`
+app.get('/api/admin/users', authenticateToken, async (request, response) => {
+  const getQuery = `select id, name, email, address, role from users`
   const getResponse = await db.all(getQuery)
   response.send(getResponse)
 })
@@ -194,13 +195,20 @@ app.post('/api/admin/stores', authenticateToken, async (request, response) => {
 
 // GET Api of Admin to dipaly all stores and their ratings
 app.get('/api/admin/stores', authenticateToken, async (request, response) => {
-  const getQuery = `select stores.name as storeName, stores.email, stores.address as address, avg(ratings.rating) as rating from stores inner join ratings
-   on stores.id=ratings.store_id group by stores.name order by storeName`
+  const getQuery = `select stores.name as storeName, stores.email, stores.address as address, avg(ratings.rating) as rating
+   from stores inner join ratings on stores.id=ratings.store_id group by stores.name order by storeName`
   const getResponse = await db.all(getQuery)
   response.send(getResponse)
 })
 
-app.post('/ratings', async (request, response) => {
+app.get('/api/user/stores', authenticateToken, async (request, response) => {
+  const getQuery = `select s.id, s.name as storeName, s.email, s.address as address, r.rating as userRating, avg(r.rating) as rating
+  from stores s left join ratings r on s.id=r.store_id group by s.name order by s.id, r.store_id`
+  const getResponse = await db.all(getQuery)
+  response.send(getResponse)
+})
+
+app.post('/api/user/ratings', authenticateToken, async (request, response) => {
   const {store_id, rating} = request.body
   const addreviewQuery = `insert into ratings(store_id, rating)
   values('${store_id}', '${rating}')`
@@ -208,8 +216,12 @@ app.post('/ratings', async (request, response) => {
   response.send('Review added Successfully')
 })
 
-app.get('/sample/stores', async (request, response) => {
-  const getStores = `select * from stores`
+app.post('/api/owner/dashboard',authenticateToken, async (request, response) => {
+  const {id} = request.body
+  const getStores = `select s.name, s.id,
+  avg(r.rating) as avgRating from stores s inner join ratings r
+  on s.id=r.store_id 
+  where owner_id = ${id} group by s.name`
   const getResponse = await db.all(getStores)
   response.send(getResponse)
 })

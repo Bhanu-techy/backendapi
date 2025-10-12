@@ -8,7 +8,7 @@ Write APIs to perform CRUD operations on the tables `colleges`, `reviews` contai
 
 | Columns    | Type       |
 | ---------- | ---------- |
-| user_id    | INTEGER    |
+| id         | INTEGER    |
 | name       | VARCHAR(60)|
 | password   | TEXT       |
 | address    | TEXT       |
