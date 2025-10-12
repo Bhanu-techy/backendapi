@@ -4,186 +4,239 @@ Given two files `app.js` and a database file `database.db` consisting of four ta
 
 Write APIs to perform CRUD operations on the tables `colleges`, `reviews` containing the following columns,
 
-**user Table**
+**users Table**
 
-| Columns    | Type    |
-| ---------- | ------- |
-| user_id    | INTEGER |
-| name       | TEXT    |
-| password   | TEXT    |
+| Columns    | Type       |
+| ---------- | ---------- |
+| user_id    | INTEGER    |
+| name       | VARCHAR(60)|
+| password   | TEXT       |
+| address    | TEXT       |
+| role       | VARCHAR(20)|
 
-**colleges Table**
+**stores Table**
 
 | Columns       | Type    |
 | ------------- | ------- |
 |  id           | INTEGER |
 |  name         | VARCHAR |
-|  location     | VARCHAR |
-|  corse        | VARCHAR |
-|  Fee          | INTEGER |
+|  email        | VARCHAR |
+|  address      | VARCHAR |
+|  owner_id     | INTEGER |
 
-**reviews Table**
+**ratings Table**
 
 | Columns       | Type    |
 | ------------- | ------- |
 | id            | INTEGER |
-| college_id    | INTEGER |
-| comment       | TEXT    |
+| owner_id      | INTEGER |
 | rating        | INTEGER |
-
-**favorite_colleges Table**
-
-| Columns       | Type    |
-| ------------- | ------- |
-| id            | INTEGER |
-| user_id       | INTEGER |
-| college_id    | INTEGER |
-
+| created_at    | TEXT    |
 
 
 ### API 1
 
-#### Path: `/colleges
+#### Path: `/api/auth/signup
 
-#### Method: `GET`
+#### Method: `POST`
 
 #### Description:
 
-Returns a list of all colleges in the colleges table
+Signup Api for Normal Users
 
-#### Response
+#### Request
 
 ```
 [
   {
-        "id": 1,
-        "name": "GRIET Engineering College",
-        "location": "Hyderabad",
-        "course": "Computer Science",
-        "fee": 100000
-    }, 
-
-  ...
+    "name" : "Bhanu Prakash",
+    "password" : "bhanu@2025",
+    "address" : "1-22/A-6, Kukatpally, Hyderabad",
+    "email" : "bhanuprakashdevari@gmail.com",
+    "role" : "admin"
+}
 ]
 ```
 
 ### API 2
 
-#### Path: `/reviews`
+#### Path: `/api/admin/user
 
-#### Method: `GET`
+#### Method: `POST`
 
 #### Description:
 
-Returns a list of reviews from reviews
+POST Api to add user only for Admins
 
-#### Response
+#### Request
 
+```
 [
-    {
-        "id": 1,
-        "college_id": 1,
-        "comment": "Great college with excellent faculty",
-        "rating": 5
-    },
-    ....
+  {
+    "name" : "Bhanu Prakash",
+    "password" : "bhanu@2025",
+    "address" : "1-22/A-6, Kukatpally, Hyderabad",
+    "email" : "bhanuprakashdevari@gmail.com",
+    "role" : "admin"
+}
 ]
 ```
 
 ### API 3
 
-#### Path: `/reviews`
+#### Path: `/api/auth/login`
 
 #### Method: `POST`
 
-#### Description:
+#### Description: 
 
-Create a review in the reviews table, `id` is auto-incremented
+Login api for authencate users
 
 #### Request
 
 ```
 {
-    "college_id": 4,
-    "comment": "Amazing campus life and clubs",
-    "rating": 5
+    "email" : "bhanuprakashdevari@gmail",
+    "password : "bhanu@2025"
 }
 ```
 
-#### Response
+#### Response 
 
 ```
-{id : id}
+jwt_token
+
 ```
 
 ### API 4
 
-#### Path: `/favorites`
+#### Path: `//api/auth/update-password`
+
+#### Method: `PUT`
+
+#### Description:
+
+PUT Api to change password for authencate users
+
+#### Response
+
+Password Updated
+
+### API 5
+
+#### Path: `/api/adim/users`
 
 #### Method: `GET`
 
 #### Description:
 
-Returns a user details and their favorite colleges of each user
+GET API to display all users
+#### Response
+
+```
+[
+    {
+        "name": "Vara Prasad Madivala",
+        "email": "varaprasad@gmail.com",
+        "address": "5-33/e-33, Aziz Nagar, Hyderabad",
+        "role": "owner"
+    }
+    ...
+]
+```
+
+### API 6
+
+#### Path: `/api/admin/users/:userId`
+
+#### Method: `GET`
+
+#### Description:
+
+GET Api to get a single user details
+
+#### Response
+
+```
+{
+    "name": "Vara Prasad Madivala",
+    "email": "varaprasad@gmail.com",
+    "address": "5-33/e-33, Aziz Nagar, Hyderabad",
+    "role": "owner"
+}
+
+```
+
+#### API 7
+
+#### PATH : `/api/admin/dashboard`
+
+#### Method: `GET`
+
+#### Description:
+
+GET Api to display all table count
+
+#### Response
+
+```
+{
+    "stores": 4,
+    "users": 3,
+    "rating": 4
+}
+
+```
+
+#### API 8
+
+#### PATH : `/api/admin/stores`
+
+#### Method: `POST`
+
+#### Description:
+
+POST API to add store to store table
+
+#### Request
+
+```
+{
+    "name" : "Techworld Electonics",
+    "email" : "techworld@gmail.com",
+    "address" : "KPHB, Kukatpally, Hyderabd",
+    "owner_id" : 3
+}
+
+```
+#### Response
+
+"Store added successfully"
+
+#### API 9
+
+#### PATH : `/api/admin/stores`
+
+#### Method: `GET`
+
+#### Description:
+
+GET Api to display all stores and their average ratings
 
 #### Response
 
 ```
 [
     {
-        "user_id": 1,
-        "user_name": "Bhanu",
-        "favorite_colleges": "Sunrise Business School, VJIT Engineering College"
+        "storeName": "Book store",
+        "email": "bookstore@gmail.com",
+        "address": "Vivek Nagar, Kukatpally, Hyderabd",
+        "rating": 3.75
     },
-    ....
+    ...
 ]
-```
 
 ```
-District Removed
-
-```
-
-### API 5
-
-#### Path: `/favorites`
-
-#### Method: `POST`
-
-#### Description:
-
-Marks the college as favorite college for a specific user
-
-#### Request
-
-```
-{
-    "user_id" : 1,
-    "college_id" : 5
-}
-```
-
-#### Response
-
-```
-
-Marked as favorite
-
-```
-### API 
-
-#### Path: `/favorite/:id`
-
-#### Method: `DELETE`
-
-#### Description:
-
-Removes the college as from the favorite list of a specific user based on user_id
-
-#### Response
-```
-
-Removed from favorites
 
 <br/>
 
