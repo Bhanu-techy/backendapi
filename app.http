@@ -75,3 +75,5 @@ Content-Type : application/json
     "store_id" : 4,
     "rating" : 4
 }
+
+GET http://localhost:3000/sample/stores

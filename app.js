@@ -208,4 +208,10 @@ app.post('/ratings', async (request, response) => {
   response.send('Review added Successfully')
 })
 
+app.get('/sample/stores', async (request, response) => {
+  const getStores = `select * from stores`
+  const getResponse = await db.all(getStores)
+  response.send(getResponse)
+})
+
 module.exports = app
