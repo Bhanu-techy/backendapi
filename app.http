@@ -3,86 +3,16 @@ POST http://localhost:3000/api/auth/login
 Content-Type : application/json
 
 {
-    "email" : "bhanuprakashdevari@gmail.com",
-    "password" : "bhanu@2025"
+    "email" : "bhanu@gmail.com",
+    "password" : "bhanu@1234"
 }
 
 POST http://localhost:3000/api/auth/signup
 Content-Type : application/json
 
-{
-    "name" : "Bhanu Prakash",
-    "password" : "bhanu@2025",
-    "address" : "1-22/A-6, Kukatpally, Hyderabad",
-    "email" : "bhanuprakashdevari@gmail.com",
-    "role" : "admin"
+{   "name" : "rahul",
+    "email" : "rahul@gmail.com",
+    "password" : "rahul@1234"
 }
 
-POST http://localhost:3000/api/admin/users
-Content-Type : application/json
-
-{
-    "name" : "Sharath Chandra",
-    "password" : "sharath@2025",
-    "address" : "34dfo-ad/e-33, Uppal, Hyderabad",
-    "email" : "sharath@gmail.com",
-    "role" : "owner"
-}
-
-
-
-
-PUT http://localhost:3000/api/auth/update-password
-Authorization : Breaer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJoYW51cHJha2FzaGRldmFyaUBnbWFpbC5jb20iLCJpYXQiOjE3NjAyNDUzMTZ9.mtywNaTHzgfDhEbb8s-NLdiT8Q8M5QN1qBE1AEssP_0
-
-Content-Type : application/json
-
-{
-    "email" : "bhanuprakashdevari@gmail.com",
-    "password" : "bhanu@1234"
-}
-
-GET http://localhost:3000/api/admin/dashboard
-Authorization : Breaer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJoYW51cHJha2FzaGRldmFyaUBnbWFpbC5jb20iLCJpYXQiOjE3NjAyNDUzMTZ9.mtywNaTHzgfDhEbb8s-NLdiT8Q8M5QN1qBE1AEssP_0
-
-
-GET http://localhost:3000/api/admin/users
-Authorization : Breaer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJoYW51cHJha2FzaGRldmFyaUBnbWFpbC5jb20iLCJpYXQiOjE3NjAyNDUzMTZ9.mtywNaTHzgfDhEbb8s-NLdiT8Q8M5QN1qBE1AEssP_0
-
-GET http://localhost:3000/api/admin/stores
-Authorization : Breaer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJoYW51cHJha2FzaGRldmFyaUBnbWFpbC5jb20iLCJpYXQiOjE3NjAyNDUzMTZ9.mtywNaTHzgfDhEbb8s-NLdiT8Q8M5QN1qBE1AEssP_0
-
-
-POST http://localhost:3000/api/admin/stores
-Authorization : Breaer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJoYW51cHJha2FzaGRldmFyaUBnbWFpbC5jb20iLCJpYXQiOjE3NjAyNDUzMTZ9.mtywNaTHzgfDhEbb8s-NLdiT8Q8M5QN1qBE1AEssP_0
-
-Content-Type : application/json
-
-{
-    "name" : "Techworld Electonics",
-    "email" : "techworld@gmail.com",
-    "address" : "KPHB, Kukatpally, Hyderabd",
-    "owner_id" : 3
-}
-
-GET http://localhost:3000/api/admin/users/4
-Authorization : Breaer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJoYW51cHJha2FzaGRldmFyaUBnbWFpbC5jb20iLCJpYXQiOjE3NjAyNDUzMTZ9.mtywNaTHzgfDhEbb8s-NLdiT8Q8M5QN1qBE1AEssP_0
-
-GET http://localhost:3000/api/user/stores
-Authorization : Breaer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJoYW51cHJha2FzaGRldmFyaUBnbWFpbC5jb20iLCJpYXQiOjE3NjAyNDUzMTZ9.mtywNaTHzgfDhEbb8s-NLdiT8Q8M5QN1qBE1AEssP_0
-
-
-POST http://localhost:3000/api/user/ratings
-Content-Type : application/json
-
-{
-    "store_id" : 3,
-    "rating" : 5
-}
-
-POST http://localhost:3000/api/owner/dashboard
-Content-Type : application/json
-
-{
-    "id" : 2
-}
+GET http://localhost:3000/users
