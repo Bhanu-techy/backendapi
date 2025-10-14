@@ -6,7 +6,7 @@ const sqlite3 = require('sqlite3')
 const cors = require('cors')
 const app = express()
 const jwt = require('jsonwebtoken')
-app.use(cors())
+//app.use(cors())
 app.use(express.json())
 
 const bcrypt = require('bcrypt')
@@ -103,8 +103,31 @@ const authenticateToken = (request, response, next) => {
   }
 }
 
-app.get('/users', async (req, res) => {
-  const getquery = `select * from users`
+app.post('/posts', async (req, res) => {
+  const {user_id, caption, img} = req.body
+  const addQuery = `insert into posts(user_id, caption, img)
+  values(${user_id}, '${caption}', '${img}')`
+  const response = await db.run(addQuery)
+  const newId = response.lastID
+  res.send(`added post ${newId}`)
+})
+
+app.get('/users/:userId', async (req, res) => {
+  const {userId} = req.params
+  const getquery = `select * from users where id = ${userId}`
+  const response = await db.get(getquery)
+  res.send(response)
+})
+
+app.delete('/posts/:postId', async (req, res) => {
+  const {postId} = req.params
+  const deleteQuery = `delete from posts where post_id = ${postId}`
+  await db.run(deleteQuery)
+  res.send('Post removed')
+})
+
+app.get('/posts', async (req, res) => {
+  const getquery = `select * from posts`
   const response = await db.all(getquery)
   res.send(response)
 })

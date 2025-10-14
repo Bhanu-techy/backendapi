@@ -10,9 +10,27 @@ Content-Type : application/json
 POST http://localhost:3000/api/auth/signup
 Content-Type : application/json
 
-{   "name" : "rahul",
-    "email" : "rahul@gmail.com",
-    "password" : "rahul@1234"
+{   "name" : "saikumar",
+    "email" : "saikumar@gmail.com",
+    "password" : "saikumar@1234"
 }
 
-GET http://localhost:3000/users
+GET http://localhost:3000/users/1
+
+GET http://localhost:3000/posts
+
+
+DELETE http://localhost:3000/posts/5
+
+
+
+
+POST http://localhost:3000/posts
+Content-Type : application/json
+
+{
+    "user_id" : 3,
+    "caption" : "Sunset and serenity",
+    "img" : "https://res.cloudinary.com/dsqphsoxb/image/upload/v1760428105/mountain-landscape_nnviov.jpg"
+
+}
