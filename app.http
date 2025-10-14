@@ -7,14 +7,6 @@ Content-Type : application/json
     "password" : "bhanu@1234"
 }
 
-POST http://localhost:3000/api/auth/signup
-Content-Type : application/json
-
-{   "name" : "saikumar",
-    "email" : "saikumar@gmail.com",
-    "password" : "saikumar@1234"
-}
-
 GET http://localhost:3000/users/1
 
 GET http://localhost:3000/posts

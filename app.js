@@ -32,31 +32,6 @@ const initializeDBAndServer = async () => {
 
 initializeDBAndServer()
 
-app.post('/api/auth/signup', async (request, response) => {
-  const {name, password, email} = request.body
-  const hashedPassword = await bcrypt.hash(password, 10)
-  const selectUserQuery = `SELECT * FROM users WHERE email = '${email}'`
-  const dbUser = await db.get(selectUserQuery)
-  if (!dbUser || (Array.isArray(dbUser) && dbUser.length === 0)) {
-    const createUserQuery = `
-      INSERT INTO 
-        users (name, password, email) 
-      VALUES 
-        ( 
-          '${name}',
-          '${hashedPassword}',
-          '${email}'
-          
-        )`
-    const dbResponse = await db.run(createUserQuery)
-    const newUserId = dbResponse.lastID
-    response.send(`Created new user with ${newUserId}`)
-  } else {
-    response.status = 400
-    response.send('User already exists')
-  }
-})
-
 // Login api
 app.post('/api/auth/login', async (request, response) => {
   const {email, password} = request.body
@@ -81,7 +56,6 @@ app.post('/api/auth/login', async (request, response) => {
     }
   }
 })
-
 
 app.post('/posts', async (req, res) => {
   const {user_id, caption, img} = req.body
