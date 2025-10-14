@@ -37,9 +37,8 @@ app.post('/api/auth/login', async (request, response) => {
   const {email, password} = request.body
   const getQuery = `select * from users where email = '${email}'`
   const dbUser = await db.get(getQuery)
-  const {id} = dbUser
 
-  if (!dbUser || (Array.isArray(dbUser) && dbUser.length === 0)) {
+  if (dbUser === undefined) {
     response.status(400)
     response.send('Invalid User')
   } else {
@@ -81,7 +80,8 @@ app.delete('/posts/:postId', async (req, res) => {
 })
 
 app.get('/posts', async (req, res) => {
-  const getquery = `select * from posts`
+  const getquery = `select u.name, p.post_id, p.user_id, p.caption, p.img from posts p inner join users u on
+  p.user_id= u.id order by caption`
   const response = await db.all(getquery)
   res.send(response)
 })
