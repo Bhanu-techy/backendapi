@@ -17,12 +17,11 @@ Content-Type : application/json
 
 GET http://localhost:3000/users/1
 
-GET http://localhost:3000/posts
+GET http://localhost:3000/posts/2
 
 
-DELETE http://localhost:3000/posts/5
 
-
+DELETE http://localhost:3000/posts/6
 
 
 POST http://localhost:3000/posts
@@ -34,3 +33,11 @@ Content-Type : application/json
     "img" : "https://res.cloudinary.com/dsqphsoxb/image/upload/v1760428105/mountain-landscape_nnviov.jpg"
 
 }
+
+PUT http://localhost:3000/posts/1
+Content-Type : application/json
+
+{
+    "caption" : "The forest held its breath, while I found mine"
+}
+

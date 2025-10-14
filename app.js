@@ -33,7 +33,7 @@ const initializeDBAndServer = async () => {
 initializeDBAndServer()
 
 // Login api
-app.post('/api/auth/login', async (request, response) => {
+app.post('/login', async (request, response) => {
   const {email, password} = request.body
   const getQuery = `select * from users where email = '${email}'`
   const dbUser = await db.get(getQuery)
@@ -48,7 +48,7 @@ app.post('/api/auth/login', async (request, response) => {
       const payload = {id: dbUser.id, email: dbUser.email}
       const jwtToken = jwt.sign(payload, 'MY_SECRET_TOKEN')
       response.status(200)
-      response.send({jwt_token: jwtToken, id})
+      response.send({jwt_token: jwtToken})
     } else {
       response.status(400)
       response.send({error_msg: 'Invalid Password'})
@@ -72,6 +72,13 @@ app.get('/users/:userId', async (req, res) => {
   res.send(response)
 })
 
+app.get('/posts/:userId', async (req, res) => {
+  const {userId} = req.params
+  const getquery = `select * from posts where user_id = ${userId}`
+  const response = await db.all(getquery)
+  res.send(response)
+})
+
 app.delete('/posts/:postId', async (req, res) => {
   const {postId} = req.params
   const deleteQuery = `delete from posts where post_id = ${postId}`
@@ -84,6 +91,15 @@ app.get('/posts', async (req, res) => {
   p.user_id= u.id order by caption`
   const response = await db.all(getquery)
   res.send(response)
+})
+
+app.put('/posts/:postId', async (req, res) => {
+  const {postId} = req.params
+  const {caption} = req.body
+  const updateQuery = `update posts set caption = '${caption}'
+  where post_id = ${postId}`
+  await db.run(updateQuery)
+  res.send('caption updated successfully')
 })
 
 module.exports = app
