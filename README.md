@@ -1,106 +1,52 @@
-# Covid-19 India
+# Users Post Dashboard
 
-Given two files `app.js` and a database file `database.db` consisting of four tables `colleges`, `users`, `favorite_colleges` and `reviews`.
+Given two files `app.js` and a database file `database.db` consisting of four tables `users`, `posts` .
 
-Write APIs to perform CRUD operations on the tables `colleges`, `reviews` containing the following columns,
+Write APIs to perform CRUD operations on the tables `users`, `posts` containing the following columns,
 
 **users Table**
 
 | Columns    | Type       |
 | ---------- | ---------- |
 | id         | INTEGER    |
-| name       | VARCHAR(60)|
+| name       | TEXT|
 | password   | TEXT       |
-| address    | TEXT       |
-| role       | VARCHAR(20)|
+| email      | TEXT       |
 
 **stores Table**
 
 | Columns       | Type    |
 | ------------- | ------- |
-|  id           | INTEGER |
-|  name         | VARCHAR |
-|  email        | VARCHAR |
-|  address      | VARCHAR |
-|  owner_id     | INTEGER |
-
-**ratings Table**
-
-| Columns       | Type    |
-| ------------- | ------- |
-| id            | INTEGER |
-| owner_id      | INTEGER |
-| rating        | INTEGER |
-| created_at    | TEXT    |
+|  post_id      | INTEGER |
+|  user_id      | INTEGER |
+|  caption      | TEXT    |
+|  img          | TEXT    | 
 
 
 ### API 1
 
-#### Path: `/api/auth/signup
+#### Path: `/login
 
 #### Method: `POST`
 
 #### Description:
 
-Signup Api for Normal Users
+Login Api for Normal Users
 
 #### Request
 
 ```
 [
   {
-    "name" : "Bhanu Prakash",
-    "password" : "bhanu@2025",
-    "address" : "1-22/A-6, Kukatpally, Hyderabad",
-    "email" : "bhanuprakashdevari@gmail.com",
-    "role" : "admin"
-}
-]
-```
-
-### API 2
-
-#### Path: `/api/admin/user
-
-#### Method: `POST`
-
-#### Description:
-
-POST Api to add user only for Admins
-
-#### Request
-
-```
-[
-  {
-    "name" : "Bhanu Prakash",
-    "password" : "bhanu@2025",
-    "address" : "1-22/A-6, Kukatpally, Hyderabad",
-    "email" : "bhanuprakashdevari@gmail.com",
-    "role" : "admin"
-}
-]
-```
-
-### API 3
-
-#### Path: `/api/auth/login`
-
-#### Method: `POST`
-
-#### Description: 
-
-Login api for authencate users
-
-#### Request
-
-```
+    "email" : "bhanu@gmail.com",
+    "password" : "bhanu@1234"
+},
 {
-    "email" : "bhanuprakashdevari@gmail",
-    "password : "bhanu@2025"
+    "email"  :   "rahul@gmail.com",
+    "password" : "rahul@1234
 }
+]
 ```
-
 #### Response 
 
 ```
@@ -108,133 +54,85 @@ jwt_token
 
 ```
 
-### API 4
+### API 2
 
-#### Path: `//api/auth/update-password`
+#### Path: `/users/:id
+
+#### Method: `GET`
+
+#### Description:
+
+GET Api to retrive a user details
+
+#### Response
+
+```
+[
+  {
+    "name" : "bhanu",
+    "email" : "bhanu@gmail.com",
+}
+]
+```
+
+### API 3
+
+#### Path: `/posts`
+
+#### Method: `GET`
+
+#### Description:
+
+GET Api returns all post details
+
+#### Response
+
+```
+[
+  {
+    "name" : "bhanu",
+    "caption : "Peacfull Evenings",
+    "img"  : " "https://res.cloudinary.com/dsqphsoxb/image/upload/v1760428105/mountain-landscape_nnviov.jpg"
+},
+...
+]
+```
+#### API 4
+
+#### PATH : `/posts/:id`
 
 #### Method: `PUT`
 
 #### Description:
 
-PUT Api to change password for authencate users
-
-#### Response
-
-Password Updated
-
-### API 5
-
-#### Path: `/api/adim/users`
-
-#### Method: `GET`
-
-#### Description:
-
-GET API to display all users
-#### Response
-
-```
-[
-    {
-        "name": "Vara Prasad Madivala",
-        "email": "varaprasad@gmail.com",
-        "address": "5-33/e-33, Aziz Nagar, Hyderabad",
-        "role": "owner"
-    }
-    ...
-]
-```
-
-### API 6
-
-#### Path: `/api/admin/users/:userId`
-
-#### Method: `GET`
-
-#### Description:
-
-GET Api to get a single user details
-
-#### Response
-
-```
-{
-    "name": "Vara Prasad Madivala",
-    "email": "varaprasad@gmail.com",
-    "address": "5-33/e-33, Aziz Nagar, Hyderabad",
-    "role": "owner"
-}
-
-```
-
-#### API 7
-
-#### PATH : `/api/admin/dashboard`
-
-#### Method: `GET`
-
-#### Description:
-
-GET Api to display all table count
-
-#### Response
-
-```
-{
-    "stores": 4,
-    "users": 3,
-    "rating": 4
-}
-
-```
-
-#### API 8
-
-#### PATH : `/api/admin/stores`
-
-#### Method: `POST`
-
-#### Description:
-
-POST API to add store to store table
+PUT API to Edit caption
 
 #### Request
 
 ```
 {
-    "name" : "Techworld Electonics",
-    "email" : "techworld@gmail.com",
-    "address" : "KPHB, Kukatpally, Hyderabd",
-    "owner_id" : 3
+    "caption" : "Peacfull Evenings"
 }
 
 ```
 #### Response
 
-"Store added successfully"
+"caption updated successfully"
 
-#### API 9
+#### API 5
 
-#### PATH : `/api/admin/stores`
+#### PATH : `/posts?:id`
 
-#### Method: `GET`
+#### Method: `DELETE`
 
 #### Description:
 
-GET Api to display all stores and their average ratings
+DELETE Api to delete a post
 
 #### Response
 
 ```
-[
-    {
-        "storeName": "Book store",
-        "email": "bookstore@gmail.com",
-        "address": "Vivek Nagar, Kukatpally, Hyderabd",
-        "rating": 3.75
-    },
-    ...
-]
+Post Removed
 
 ```
 
